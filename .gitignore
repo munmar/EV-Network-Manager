@@ -1,0 +1,18 @@
+# Django-related files
+*.pyc
+__pycache__/
+*.db
+*.sqlite3
+*.log
+
+# Virtual env
+ev/
+.venv/
+venv/
+
+# Secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
