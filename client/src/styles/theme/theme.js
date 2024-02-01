@@ -1,29 +1,39 @@
 import { createTheme } from '@mui/material/styles';
 
+// lighter = colour[100]
+// lightest = colour[50]
 export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
       main: '#100030',
+      lighter: '#b9bace',
+      lightest: '#e3e4eb'
     },
     secondary: {
       main: '#F050F8',
+      lighter: '#f9bdfb',
+      lightest: '#fde5fd'
     },
     info :{
       main: '#0288D1',
-      lighter: '#e1f5fe'
+      lighter: '#b3e5fc',
+      lightest: '#e1f5fe'
     },
     warning: {
       main: '#DECC10',
-      lighter: '#fafce5'
+      lighter: '#f4f5bf',
+      lightest: '#fafce5'
     },
     success: {
       main: '#14B343',
-      lighter: '#e5f6e8'
+      lighter: '#c2e8c7',
+      lightest: '#e5f6e8'
     },
     error: {
       main: '#df3800',
-      lighter: '#fde8e6'
+      lighter: '#ffcbb9',
+      lightest: '#fde8e6'
     },
   },
   typography: {
