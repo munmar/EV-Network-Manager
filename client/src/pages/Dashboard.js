@@ -10,6 +10,8 @@ import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 
 import StatisticsCard from "../sections/dashboard/StatisticsCard";
 import PowerUsageChart from "../sections/dashboard/PowerUsageChart";
+import ChargingSessionsChart from "../sections/dashboard/ChargingSessionsChart";
+import FinancialChart from "../sections/dashboard/FinancialChart";
 
 /** Components to create:
  *      - Statistics Cards (Icon, typography, content (number), chip (% up or down)
@@ -75,33 +77,36 @@ const Dashboard = ({ theme }) => {
                             />
                         </Grid>
                     ))}
-                </Grid>
-                <Grid
-                    xs={12}
-                    lg={8}
-                >
-                {/* Power Usage chart goes here (line) */}
-                    <PowerUsageChart />
-                </Grid>
-                <Grid
-                    xs={12}
-                    md={6}
-                    lg={4}
-                >
-                {/* Charging Session chart goes here (line) */}
-                </Grid>
-                <Grid
-                    xs={12}
-                    lg={8}
-                >
-                {/* Charging Stations table goes here */}
-                </Grid>
-                <Grid
-                    xs={12}
-                    md={6}
-                    lg={4}
-                >
-                {/* Financial chart goes here (bar) */}
+
+                    <Grid
+                        xs={12}
+                        lg={8}
+                    >
+                        {/* Power Usage chart goes here (line) */}
+                        <PowerUsageChart />
+                    </Grid>
+                    <Grid
+                        xs={12}
+                        md={6}
+                        lg={4}
+                    >
+                        {/* Charging Session chart goes here (line) */}
+                        <ChargingSessionsChart />
+                    </Grid>
+                    <Grid
+                        xs={12}
+                        lg={8}
+                    >
+                        {/* Charging Stations table goes here */}
+                    </Grid>
+                    <Grid
+                        xs={12}
+                        md={6}
+                        lg={4}
+                    >
+                        {/* Financial chart goes here (bar) */}
+                        <FinancialChart />
+                    </Grid>
                 </Grid>
             </Container>
         </Box>
