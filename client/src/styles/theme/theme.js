@@ -52,7 +52,7 @@ export const lightTheme = createTheme({
     body2: {
       fontFamily: 'Rubik',
     },
-    fontFamily: 'Roboto, Rubik',
+    fontFamily: ['Roboto', 'Rubik']
   },
   components: {
     MuiSwitch: {
