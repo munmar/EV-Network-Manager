@@ -12,6 +12,7 @@ import StatisticsCard from "../sections/dashboard/StatisticsCard";
 import PowerUsageChart from "../sections/dashboard/PowerUsageChart";
 import ChargingSessionsChart from "../sections/dashboard/ChargingSessionsChart";
 import FinancialChart from "../sections/dashboard/FinancialChart";
+import ChargingStationsTable from "../sections/dashboard/ChargingStationsTable";
 
 /** Components to create:
  *      - Statistics Cards (Icon, typography, content (number), chip (% up or down)
@@ -55,7 +56,7 @@ const Dashboard = ({ theme }) => {
         <Box
             sx={{
                 flexGrow: 1,
-                py: 8
+                py: 2
             }}
         >
             <Container maxWidth="xl">
@@ -98,6 +99,7 @@ const Dashboard = ({ theme }) => {
                         lg={8}
                     >
                         {/* Charging Stations table goes here */}
+                        <ChargingStationsTable theme={theme}/>
                     </Grid>
                     <Grid
                         xs={12}
