@@ -4,8 +4,7 @@ import { Card, CardHeader, CardContent } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 const FinancialChart = () => {
     /** Replace placeholder data with real values from database
-     * Will require: API, State
-     * Data:
+     *
      */
 
     return (
@@ -20,8 +19,8 @@ const FinancialChart = () => {
             <CardContent sx={{width: '100%', height: '100%'}}>
                 <BarChart
                     xAxis={[{ scaleType: 'band', data: ['Jan', 'Feb', 'Mar'] }]}
-                    yAxis={[{label: 'Revenue'}]}
-                    series={[{ data: [4, 3, 5] }]}
+                    yAxis={[{label: "Revenue ('000)"}]}
+                    series={[{ data: [12, 8.5, 13.7] }]}
                     height={300}
                 />
             </CardContent>
