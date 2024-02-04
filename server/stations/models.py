@@ -13,6 +13,7 @@ class ChargerStation(models.Model):
 class Charger(models.Model):
     serial_number = models.CharField(max_length=255, unique=True)
     charger_type = models.CharField(max_length=255)
+    charger_capacity = models.IntegerField(default=7)
     status = models.CharField(max_length=255)
     station = models.ForeignKey(ChargerStation, on_delete=models.CASCADE)
 
@@ -26,6 +27,7 @@ class Session(models.Model):
     cost = models.DecimalField(max_digits=10, decimal_places=2)
     revenue = models.DecimalField(max_digits=10, decimal_places=2)
     start_time = models.DateTimeField()
+    duration = models.IntegerField(default=10)
     end_time = models.DateTimeField()
 
     def __str__(self):
