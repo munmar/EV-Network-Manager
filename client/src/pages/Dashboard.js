@@ -56,7 +56,6 @@ const Dashboard = ({ theme }) => {
         <Box
             sx={{
                 flexGrow: 1,
-                py: 2
             }}
         >
             <Container maxWidth="xl">
