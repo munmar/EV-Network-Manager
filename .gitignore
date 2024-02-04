@@ -4,6 +4,7 @@ __pycache__/
 *.db
 *.sqlite3
 *.log
+server/stations/management/
 
 # Virtual env
 ev/
