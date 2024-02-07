@@ -1,6 +1,17 @@
-from django.http import HttpResponse
+from rest_framework import generics
+from .models import ChargerStation, Charger, Session
+from .serializers import ChargerStationSerializer, ChargerSerializer, SessionSerializer
 
 
 # Create your views here.
-def index(request):
-    return HttpResponse("Hello world. You're at the stations index.")
+class ChargerStationList(generics.ListAPIView):
+    queryset = ChargerStation.objects.all().prefetch_related('charger_set')
+    serializer_class = ChargerStationSerializer
+
+class ChargerList(generics.ListAPIView):
+    queryset = Charger.objects.all()
+    serializer_class = ChargerSerializer
+
+class SessionList(generics.ListAPIView):
+    queryset = Session.objects.all()
+    serializer_class = SessionSerializer
