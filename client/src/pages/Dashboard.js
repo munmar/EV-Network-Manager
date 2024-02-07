@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box, Container,  Unstable_Grid2 as Grid } from '@mui/material';
 
@@ -14,6 +14,9 @@ import ChargingSessionsChart from "../sections/dashboard/ChargingSessionsChart";
 import FinancialChart from "../sections/dashboard/FinancialChart";
 import ChargingStationsTable from "../sections/dashboard/ChargingStationsTable";
 
+// API
+import { fetchStations } from "../api/stations";
+import { fetchSessions } from "../api/sessions";
 /** Components to create:
  *      - Statistics Cards (Icon, typography, content (number), chip (% up or down)
  *      - 2 Line Graphs (Dropdown: Time options e.g. month, week, year etc.)
@@ -23,32 +26,90 @@ import ChargingStationsTable from "../sections/dashboard/ChargingStationsTable";
  *
  * */
 const Dashboard = ({ theme }) => {
+    const [chargerStations, setChargerStations] = useState([]);
+    const [powerData, setPowerData] = useState([]);
+    const [selectedYear, setSelectedYear] = useState(0);
+    const [selectedMonth, setSelectedMonth] = useState(0);
 
-    //  Replace value with value taken from database
+    useEffect(() => {
+        // fetch charger stations data
+        fetchStations()
+            .then(data => setChargerStations(data))
+            .catch(error => console.error('Error fetching charger stations:', error));
+
+        // fetch session data
+        fetchSessions()
+            .then(sessions => {
+                const dailyPowerUsage = {};
+
+                sessions.forEach(session => {
+                    const date = new Date(session.start_time);
+                    const usageKwh = parseFloat(session.usage_kwh);
+
+                    // date to be formatted as YYYY-MM-DD from datetime
+                    const dateString = date.toISOString().split('T')[0];
+
+                    if (dailyPowerUsage[dateString]) {
+                        dailyPowerUsage[dateString] += usageKwh;
+                    } else {
+                        dailyPowerUsage[dateString] = usageKwh;
+                    }
+                });
+
+                // chartData holds an array of objects containing the date, usage information
+                const chartData = Object.entries(dailyPowerUsage).map(([date, usage]) => ({
+                    date: new Date(date),
+                    usage
+                }))
+                    // sort the array by dates
+                    .sort((a, b) => a.date - b.date);
+
+                console.log('Data:', chartData)
+
+                setPowerData(chartData);
+            })
+            .catch(error => console.error('Error fetching sessions:', error));
+    }, []);
+
+    // Year and Month state handler
+    const handlePeriodChange = (year, month) => {
+        setSelectedYear(year);
+        console.log('Selected Year:', year);
+        setSelectedMonth(month);
+        console.log('Selected Month:', month);
+    };
+
+    const countChargerStatus = (status) => {
+        return chargerStations.reduce((total, station) => {
+            return total + station.charger_set.filter(charger => charger.status === status).length;
+        }, 0);
+    };
+
+    // Data for the chargers stats cards
     const chargerStatusItems = [
         {
             title: 'Connected',
             icon: <OutletRoundedIcon fontSize="large" />,
             color: 'info',
-            value: '10'
+            value: countChargerStatus('Connected')
         },
         {
             title: 'Online',
             icon: <WifiRoundedIcon fontSize="large" />,
             color: 'success',
-            value: '10'
+            value: countChargerStatus('Online')
         },
         {
             title: 'Offline',
             icon: <WifiOffRoundedIcon fontSize="large" />,
             color: 'error',
-            value: '10'
+            value: countChargerStatus('Offline')
         },
         {
             title: 'Faulty',
             icon: <WarningAmberRoundedIcon fontSize="large" />,
             color: 'warning',
-            value: '10'
+            value: countChargerStatus('Faulty')
         },
     ]
 
@@ -83,7 +144,12 @@ const Dashboard = ({ theme }) => {
                         lg={8}
                     >
                         {/* Power Usage chart goes here (line) */}
-                        <PowerUsageChart />
+                        <PowerUsageChart
+                            powerData={powerData}
+                            selectedYear={selectedYear}
+                            selectedMonth={selectedMonth}
+                            onPeriodChange={handlePeriodChange}
+                        />
                     </Grid>
                     <Grid
                         xs={12}
@@ -98,7 +164,10 @@ const Dashboard = ({ theme }) => {
                         lg={8}
                     >
                         {/* Charging Stations table goes here */}
-                        <ChargingStationsTable theme={theme}/>
+                        <ChargingStationsTable
+                            theme={theme}
+                            chargerStations={chargerStations}
+                        />
                     </Grid>
                     <Grid
                         xs={12}
