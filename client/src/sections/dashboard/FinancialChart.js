@@ -2,10 +2,13 @@ import React from 'react';
 
 import { Card, CardHeader, CardContent } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
-const FinancialChart = () => {
-    /** Replace placeholder data with real values from database
-     *
-     */
+const FinancialChart = ({ revenueData, costData }) => {
+    /* TODO
+    * Add select input as action in Card Header.
+    * Add Cost financials when selected.
+    * */
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const revenueNumbers = revenueData.map(data => data.revenue);
 
     return (
         <Card sx={{ borderRadius: 4, border: 3, borderColor: 'secondary.main', backgroundColor: 'secondary.lightest' }}>
@@ -18,9 +21,8 @@ const FinancialChart = () => {
             />
             <CardContent sx={{width: '100%', height: '100%'}}>
                 <BarChart
-                    xAxis={[{ scaleType: 'band', data: ['Jan', 'Feb', 'Mar'] }]}
-                    yAxis={[{label: "Revenue ('000)"}]}
-                    series={[{ data: [12, 8.5, 13.7] }]}
+                    xAxis={[{ scaleType: 'band', data: monthNames }]}
+                    series={[{ data: revenueNumbers, label: "Revenue", color: 'green' }]}
                     height={300}
                 />
             </CardContent>

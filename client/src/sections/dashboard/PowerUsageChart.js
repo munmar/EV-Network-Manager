@@ -5,8 +5,8 @@ import { LineChart } from '@mui/x-charts/LineChart';
 import PeriodSelect from "../../components/PeriodSelect";
 
 const PowerUsageChart = ({ powerData, selectedYear, selectedMonth, onPeriodChange  }) => {
-    /** Replace placeholder data with real values from database
-     * Will require: API, State
+    /** TODO
+     * Add functionality to period change -> changing month/year should change the data shown
      */
 
     return (

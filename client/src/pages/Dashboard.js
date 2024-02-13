@@ -28,6 +28,10 @@ import { fetchSessions } from "../api/sessions";
 const Dashboard = ({ theme }) => {
     const [chargerStations, setChargerStations] = useState([]);
     const [powerData, setPowerData] = useState([]);
+    const [sessionsData, setSessionsData] = useState([]);
+    const [revenueData, setRevenueData] = useState([]);
+    const [costData, setCostData] = useState([]);
+    const [financialSelection, setFinancialSelection] = useState('revenue');
     const [selectedYear, setSelectedYear] = useState(0);
     const [selectedMonth, setSelectedMonth] = useState(0);
 
@@ -40,11 +44,19 @@ const Dashboard = ({ theme }) => {
         // fetch session data
         fetchSessions()
             .then(sessions => {
+                // Power Usage
                 const dailyPowerUsage = {};
+                // Sessions
+                const weeklyData = Array(4).fill(0);
+                const now = new Date();
+                // Financials
+                const monthlyRevenue = {};
+                const monthlyCost = {};
 
                 sessions.forEach(session => {
                     const date = new Date(session.start_time);
                     const usageKwh = parseFloat(session.usage_kwh);
+                    const month = date.getMonth();
 
                     // date to be formatted as YYYY-MM-DD from datetime
                     const dateString = date.toISOString().split('T')[0];
@@ -54,7 +66,28 @@ const Dashboard = ({ theme }) => {
                     } else {
                         dailyPowerUsage[dateString] = usageKwh;
                     }
+
+                    if (date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()) {
+                        const weekOfMonth = Math.floor(date.getDate() / 7);
+                        weeklyData[weekOfMonth]++;
+                    }
+
+                    // Financial calculations
+                    if (monthlyRevenue[month]) {
+                        monthlyRevenue[month] += parseFloat(session.revenue);
+                    } else {
+                        monthlyRevenue[month] = parseFloat(session.revenue);
+                    }
+
+                    if (monthlyCost[month]) {
+                        monthlyCost[month] += parseFloat(session.cost);
+                    } else {
+                        monthlyCost[month] = parseFloat(session.cost);
+                    }
                 });
+
+                const revenueData = Object.entries(monthlyRevenue).map(([month, revenue]) => ({month, revenue}));
+                const costData = Object.entries(monthlyCost).map(([month, cost]) => ({month, cost}));
 
                 // chartData holds an array of objects containing the date, usage information
                 const chartData = Object.entries(dailyPowerUsage).map(([date, usage]) => ({
@@ -64,9 +97,10 @@ const Dashboard = ({ theme }) => {
                     // sort the array by dates
                     .sort((a, b) => a.date - b.date);
 
-                console.log('Data:', chartData)
-
                 setPowerData(chartData);
+                setSessionsData(weeklyData);
+                setRevenueData(revenueData);
+                setCostData(costData)
             })
             .catch(error => console.error('Error fetching sessions:', error));
     }, []);
@@ -157,7 +191,9 @@ const Dashboard = ({ theme }) => {
                         lg={4}
                     >
                         {/* Charging Session chart goes here (line) */}
-                        <ChargingSessionsChart />
+                        <ChargingSessionsChart
+                            sessionsData={sessionsData}
+                        />
                     </Grid>
                     <Grid
                         xs={12}
@@ -175,7 +211,7 @@ const Dashboard = ({ theme }) => {
                         lg={4}
                     >
                         {/* Financial chart goes here (bar) */}
-                        <FinancialChart />
+                        <FinancialChart revenueData={revenueData} costData={costData}/>
                     </Grid>
                 </Grid>
             </Container>
