@@ -160,6 +160,7 @@ const Dashboard = ({ theme }) => {
                 >
                     {chargerStatusItems.map(item => (
                         <Grid
+                            key={item.title}
                             xs={12}
                             sm={6}
                             lg={3}
