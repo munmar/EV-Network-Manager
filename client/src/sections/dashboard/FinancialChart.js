@@ -5,11 +5,22 @@ import { BarChart } from '@mui/x-charts/BarChart';
 const FinancialChart = ({ revenueData, costData }) => {
     /* TODO
     * Add select input as action in Card Header.
-    * Add Cost financials when selected.
+    * Add Cost financials when selected. => Swap between Revenue and Cost data.
     * */
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const revenueNumbers = revenueData.map(data => data.revenue);
 
+    // empty array of 0's for each month of year (len 12)
+    const revenueNumbers = new Array(12).fill(0);
+
+    // for entry in revenueData dict, assign revenue value to a zero placeholder in revenueNumbers [0] array.
+    // These changes also fixed a CartesianContextProvider issue showing in the developer console.
+    if (revenueData) {
+        revenueData.forEach(({ month, revenue }) => {
+            revenueNumbers[parseInt(month)] = revenue;
+        })
+    }
+    // console.log('revenueData:', revenueData);
+    // console.log('revenueNumbers:', revenueNumbers);
     return (
         <Card sx={{ borderRadius: 4, border: 3, borderColor: 'secondary.main', backgroundColor: 'secondary.lightest' }}>
             <CardHeader
