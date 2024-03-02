@@ -10,18 +10,17 @@
 ---
 
 ## About this project
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+
+
 This project was created as a form of practice. But also because I saw this UI design whilst I was browsing dribbble for inspiration.
 
 Here is the original UI Design from Robbie Firmansah:
 
 [<img src="./images/insp/RobbiFirmansahEVNetManDash.png" height="500" width="720">](https://dribbble.com/shots/21606440-EVCas-EV-Charging-Network-Management-Dashboard)
-
-### Stack
-
-<img src="./images/icons/django-plain-wordmark.svg" height="75" width="75" alt="Django Logo">
-<img src="./images/icons/react-original-wordmark.svg" height="75" width="75" alt="React Logo">
-<img src="./images/icons/postgresql-original-wordmark.svg" height="75" width="75" alt="PostgreSQL Logo">
-<img src="./images/icons/amazonwebservices-original-wordmark.svg" height="75" width="75" alt="AWS Logo">
 
 
 ### Requirements
